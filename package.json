@@ -1,0 +1,9 @@
+{
+  "name": "2038.wtf",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "http-server src",
+    "deploy": "firebase deploy"
+  },
+  "homepage": "https://github.com/Errorname/2038.wtf#readme"
+}

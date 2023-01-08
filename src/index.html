@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>The Y2038 Bug: What You Need to Know</title>
+    <meta
+      name="description"
+      content="Learn about the Year 2038 bug, a computer bug that is related to the way that computers store and handle dates. Find out what causes the Y2038 bug, whether it has already happened, and what you can do to prepare for it."
+    />
+    <meta
+      name="keywords"
+      content="Y2038 bug, computer bug, date, epoch, numerical value, bits, overflow, Year 2038 problem, Unix Millennium bug, impact, prepare"
+    />
+    <meta property="og:image" content="https://2038.wtf/assets/opengraph.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="assets/favicon-light.png" rel="icon" media="(prefers-color-scheme: light)" />
+    <link href="assets/favicon-dark.png" rel="icon" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" type="module"></script>
+  </head>
+  <body>
+    <section class="hero">
+      <h1>Countdown to Y2038 bug</h1>
+
+      <div class="countdown">
+        <p class="subtitle"><b class="last-date"></b> will happen in</p>
+        <countdown-clock></countdown-clock>
+      </div>
+
+      <div class="current-timestamp">
+        <p class="subtitle"><b>Current timestamp</b></p>
+        <number-clock base="2" size="31"></number-clock>
+      </div>
+    </section>
+
+    <hr />
+
+    <h2>What is the Y2038 bug?</h2>
+    <p>
+      The Y2038 bug is a computer bug that is related to the way that computers store and handle
+      dates. It is also known as the "Year 2038 problem", the "Unix Millennium bug", or the
+      "Epochalypse".
+    </p>
+
+    <h3>How does a computer store a date?</h3>
+    <p>
+      To store a date, computers use a numerical value to represent the year, month, day, hours,
+      minutes and seconds. This numerical value is often based on the number of seconds that have
+      passed since a specific point in time, known as the "epoch". Different operating systems use
+      different epochs, but a common one is <span class="epoch"></span>.<br />This means that, most
+      of the time, computers represent a date as the
+      <b>number of seconds that have passed since <span class="epoch"></span></b>.
+    </p>
+
+    <br />
+
+    <div class="storing-example">
+      <p>Here is the current date:</p>
+      <date-clock></date-clock>
+
+      <br /><br />
+
+      <p>
+        Number of seconds since <span class="epoch"></span> (also called <b>Unix Timestamp</b>):
+      </p>
+      <number-clock base="10" size="10"></number-clock>
+
+      <br /><br />
+
+      <p>
+        A computer stores numbers in a <b>binary</b> form, which is a system of representing numbers
+        using only <b>two digits: 0 and 1</b>. These digits are known as <b>"bits"</b>.
+      </p>
+
+      <p>Here is the representation of the Unix timestamp in binary:</p>
+      <number-clock base="2" size="31"></number-clock>
+
+      <p><b>As of today, it takes 31 bits to store the current date in a computer.</b></p>
+
+      <br />
+
+      <p>
+        Inside a computer, memory is made of <b>bytes</b>, which are groups of 8 bits. Therefore, to
+        store a date (which is actually a number) in a computer, it takes <b>4 bytes</b>:
+        <b>31 bits + 1 bit</b> to define the sign of the number. (<kbd>0</kbd> for positive,
+        <kbd>1</kbd> for negative)
+      </p>
+
+      <p>
+        With this configuration, <b>computers cannot use more than 31 bits to store the date</b>!
+      </p>
+    </div>
+
+    <br />
+
+    <h3>Why size matters</h3>
+
+    <p>Here is an example:</p>
+
+    <p>Let's say that we want to store a number in a computer. We use 4 bits to store it.</p>
+
+    <div class="binary-examples">
+      <p><kbd>0000</kbd> = <kbd>0</kbd></p>
+      <p><kbd>0001</kbd> = <kbd>1</kbd></p>
+      <p><kbd>0010</kbd> = <kbd>2</kbd></p>
+      <p><kbd>0011</kbd> = <kbd>3</kbd></p>
+      <p>etc...</p>
+    </div>
+    <p>
+      The maximum value that can be stored in 4 bits is <kbd>1111</kbd> which is equal to
+      <kbd>15</kbd>.
+    </p>
+
+    <br />
+
+    <p>
+      <b>But what happens if we decide to keep incrementing the bits?</b> If that happens, then the
+      binary value will "overflow" and restart back at <kbd>0000</kbd>.
+    </p>
+
+    <p>
+      Yes. For a computer, if a number is stored in 4 bits: <kbd>15</kbd> + <kbd>1</kbd> =
+      <kbd>0</kbd>
+    </p>
+
+    <div class="overflowing">
+      <number-clock base="2" size="4"></number-clock>
+      <span class="equal"></span>
+      <number-clock base="10" size="2" modulo="16"></number-clock>
+    </div>
+
+    <br /><br />
+
+    <p>
+      Now, if we go back to our date: The maximum value that can be stored in 31 bits is
+      <kbd>2147483647</kbd>. This is equal to <b class="last-date"></b>.
+    </p>
+
+    <p>
+      If we try to add one more second to this date, the computer will overflow again. But because
+      computers are using one more bit for the sign (+/-), instead of going back to <kbd>0</kbd>,
+      the computer will restart back at <kbd>-2147483647</kbd>, which is equivalent to
+      <b class="negative-date"></b>!
+    </p>
+
+    <p><b>Since computers don't handle well time-traveling, this is a problem.</b></p>
+
+    <br />
+
+    <h2>Is it already happening?</h2>
+    <p>
+      <b>Yes, and it's going to happen more and more.</b> Software are already handling dates in the
+      future (e.g. to calculate a loan payment schedule). So, even though we are not in 2038 yet, we
+      are already experiencing the 2038 problem.
+    </p>
+    <p>
+      A recent real example of the 2038 problem documented on
+      <a href="https://en.wikipedia.org/wiki/Year_2038_problem#Early_problems">Wikipedia</a>:
+    </p>
+    <p>
+      <i>
+        In May, 2006, reports surfaced of an early Y2038 problem in the AOLServer software. The
+        software would specify that a database request should "never" timeout by specifying a
+        timeout date one billion seconds in the future. One billion seconds after 21:27:28 on 12
+        May, 2006 is beyond the 2038 cutoff date, so after this date, the timeout calculation
+        overflowed and calculated a timeout date that was actually in the past, causing the software
+        to crash.
+      </i>
+    </p>
+
+    <br />
+
+    <h2>What can I do about it?</h2>
+
+    <p>
+      <b>There is a solution:</b> Instead of using 32 bits, computers should use 64 bits (i.e. 8
+      bytes) to store a date which will not overflow for 292 billion years.
+    </p>
+
+    <h3>As a user</h3>
+    <p>
+      As a user, you can ensure that your devices and software are
+      <b>kept up to date with the latest patches and updates</b>. As soon as software are fixed to
+      use 64 bits to store dates, you'll be safe from the Y2038 bug.
+    </p>
+
+    <h3>As a developer</h3>
+    <p>As a developer, there are a few steps you can take to prepare for the Y2038 bug:</p>
+    <ul>
+      <li>Identify any systems or code that may be affected by the Y2038 bug</li>
+      <li>
+        Update the way that dates are stored or processed to use a larger numerical value, such as a
+        64-bit integer
+      </li>
+      <li>
+        Test systems and code to ensure that they are able to handle dates beyond the year 2038
+      </li>
+      <li>
+        Communicate with other stakeholders, such as users or vendors, to ensure that they are aware
+        of the Y2038 bug and any steps that may be necessary to prepare for it
+      </li>
+    </ul>
+
+    <br />
+
+    <hr />
+
+    <h2>Variants</h2>
+
+    <h3>Y2106 bug</h3>
+    <p>
+      The Y2106 bug is a similar problem that is expected to occur in the year 2106, when the
+      numerical value used to represent dates will again overflow. The difference being that
+      computers use the full 32 bits to represent dates without using the first bit for the sign.
+    </p>
+    <div class="clock-2106">
+      <number-clock base="2" size="32"></number-clock>
+    </div>
+    <p>
+      The Y2106 bug is expected to be less severe than the Y2038 bug, as it is expected that most
+      systems will have been updated to use a 64-bit integer to represent dates by that time.
+    </p>
+
+    <h3>Y2K bug</h3>
+    <p>
+      The Y2K bug, or "Millennium bug", was a similar problem that occurred at the turn of the
+      millennium, when many systems were not prepared to handle the transition from the year 1999 to
+      the year 2000. The Y2K bug was caused by the fact that many systems used a two-digit
+      representation of the year, which meant that the year 2000 was represented as "00". This could
+      have caused issues when these systems attempted to process dates after the year 2000, as the
+      two-digit representation of the year would have been indistinguishable from the year 1900. The
+      Y2K bug was largely fixed before it could cause significant issues.
+    </p>
+    <div class="clock-y2k">
+      <span>19</span>
+      <number-clock base="10" size="2"></number-clock>
+    </div>
+
+    <br /><br />
+
+    <hr />
+
+    <footer>
+      <p>Developed by <a href="https://errorna.me">Thibaud "Errorname" Courtoison</a></p>
+      <p>Source code available on <a href="https://github.com/Errorname/2038.wtf">GitHub</a>.</p>
+      <p>
+        Sources: <a href="https://en.wikipedia.org/wiki/Year_2038_problem">Wikipedia</a>,
+        <a href="http://www.2038.org/">2038.org</a>,
+        <a href="http://neilrieck.net/docs/calendar_time_y2k_etc.html">Neil Rieck</a>
+      </p>
+    </footer>
+  </body>
+  <script>
+    // Try to use the user's english variant, but fallback to 'en' if none is available
+    const languages = [...navigator.languages.filter((l) => l.startsWith('en')), 'en']
+
+    const intl = new Intl.DateTimeFormat(languages, {
+      dateStyle: 'long',
+      timeStyle: 'long',
+      hourCycle: 'h23',
+      timeZone: 'UTC',
+    })
+
+    const lastDate = intl.format(new Date(2147483647000))
+    const epoch = intl.format(new Date(0))
+    const negativeDate = intl.format(new Date(-2147483647000))
+
+    document.querySelectorAll('.last-date').forEach((el) => (el.innerHTML = lastDate))
+    document.querySelectorAll('.epoch').forEach((el) => (el.innerHTML = epoch))
+    document.querySelectorAll('.negative-date').forEach((el) => (el.innerHTML = negativeDate))
+  </script>
+</html>

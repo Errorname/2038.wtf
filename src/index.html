@@ -22,7 +22,9 @@
       <h1>Countdown to Y2038 bug</h1>
 
       <div class="countdown">
-        <p class="subtitle"><b class="last-date"></b> will happen in</p>
+        <p class="subtitle">
+          <b class="last-date">January 19, 2038 at 03:14:07 UTC</b> will happen in
+        </p>
         <countdown-clock></countdown-clock>
       </div>
 
@@ -46,9 +48,13 @@
       To store a date, computers use a numerical value to represent the year, month, day, hours,
       minutes and seconds. This numerical value is often based on the number of seconds that have
       passed since a specific point in time, known as the "epoch". Different operating systems use
-      different epochs, but a common one is <span class="epoch"></span>.<br />This means that, most
-      of the time, computers represent a date as the
-      <b>number of seconds that have passed since <span class="epoch"></span></b>.
+      different epochs, but a common one is
+      <span class="epoch">January 1, 1970 at 00:00:00 UTC</span>.<br />This means that, most of the
+      time, computers represent a date as the
+      <b
+        >number of seconds that have passed since
+        <span class="epoch">January 1, 1970 at 00:00:00 UTC</span></b
+      >.
     </p>
 
     <br />
@@ -60,7 +66,8 @@
       <br /><br />
 
       <p>
-        Number of seconds since <span class="epoch"></span> (also called <b>Unix Timestamp</b>):
+        Number of seconds since <span class="epoch">January 1, 1970 at 00:00:00 UTC</span> (also
+        called <b>Unix Timestamp</b>):
       </p>
       <number-clock base="10" size="10"></number-clock>
 
@@ -132,14 +139,15 @@
 
     <p>
       Now, if we go back to our date: The maximum value that can be stored in 31 bits is
-      <kbd>2147483647</kbd>. This is equal to <b class="last-date"></b>.
+      <kbd>2147483647</kbd>. This is equal to
+      <b class="last-date">January 19, 2038 at 03:14:07 UTC</b>.
     </p>
 
     <p>
       If we try to add one more second to this date, the computer will overflow again. But because
       computers are using one more bit for the sign (+/-), instead of going back to <kbd>0</kbd>,
       the computer will restart back at <kbd>-2147483647</kbd>, which is equivalent to
-      <b class="negative-date"></b>!
+      <b class="negative-date">December 13, 1901 at 20:45:53 UTC</b>!
     </p>
 
     <p><b>Since computers don't handle well time-traveling, this is a problem.</b></p>
